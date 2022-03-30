@@ -1632,3 +1632,9 @@
 (defn get-modal-id
   []
   (:modal/id @state))
+
+(defn edit-in-query-component
+  []
+  (and (editing?)
+       ;; config
+       (:custom-query? (last (get-editor-args)))))
