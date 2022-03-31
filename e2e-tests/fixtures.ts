@@ -17,12 +17,13 @@ if (fs.existsSync(testTmpDir)) {
 
 export let graphDir = path.resolve(testTmpDir, "e2e-test", repoName)
 
-// NOTE: This is a console log watcher for error logs.
+// NOTE: This following is a console log watcher for error logs.
+// Save and print all logs when error happens.
+let logs: string
 const consoleLogWatcher = (msg: ConsoleMessage) => {
   // console.log(msg.text())
-  expect(msg.text()).not.toMatch(/^Failed to/)
-  expect(msg.text()).not.toMatch(/^Error/)
-  expect(msg.text()).not.toMatch(/^Uncaught/)
+  logs += msg.text() + '\n'
+  expect(msg.text(), logs).not.toMatch(/^(Failed to|Error|Uncaught)/)
   // NOTE: React warnings will be logged as error.
   // expect(msg.type()).not.toBe('error')
 }
